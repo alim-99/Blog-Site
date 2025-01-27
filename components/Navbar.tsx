@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { ModeToggle } from './ModeToggle'
+import { SignedIn, UserButton } from '@clerk/nextjs'
 
 const Navbar = () => {
   return (
@@ -18,6 +19,11 @@ const Navbar = () => {
         <Link className='mr-2 dark:hover:text-gray-500 hover:text-slate-900' href="/blog">Blog</Link>
         <Link className='mr-5 dark:hover:text-gray-500 hover:text-slate-900' href="/posts">Posts</Link>
         <ModeToggle />
+        <span className='relative mr-2 top-1'>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+        </span>
       </nav>
     </header>
   )

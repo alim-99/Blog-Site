@@ -3,6 +3,7 @@ import { Lora } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const fontLora = Lora({
   variable: "--font-lora",
@@ -21,7 +22,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <ClerkProvider>
+          <html lang="en" suppressHydrationWarning>
       <body
         className={`${fontLora.variable}  antialiased`}
       >
@@ -36,5 +38,6 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
+    </ClerkProvider>
   );
 }
