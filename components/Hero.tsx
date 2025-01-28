@@ -13,7 +13,7 @@ const Hero = () => {
   return (
     <section className="py-10 sm:py-16 lg:py-20">
       <div className="flex flex-col items-center justify-center text-center px-4 sm:px-8 lg:px-16">
-        <h1 className="dark:text-blue-600 text-blue-800 text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-4">
+        <h1 className="dark:text-blue-600 text-gray-800 text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-4">
           Share Your Stories with the World
         </h1>
         <p className="leading-6 dark:text-gray-300 text-gray-700 max-w-lg sm:max-w-xl lg:max-w-2xl mb-6 text-md sm:text-base lg:text-lg">

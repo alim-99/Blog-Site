@@ -12,7 +12,7 @@ const Navbar = () => {
       alt='logo'
       width={50}
       height={50} 
-      className='ml-2 mb-3'
+      className='ml-3 mb-4'
       />
       <nav className='flex-end justify-between flex-col ml-auto text-2xl dark:text-gray-400 text-slate-700'>
         <Link className='mr-2 dark:hover:text-gray-500 hover:text-slate-900' href="/">Home</Link>

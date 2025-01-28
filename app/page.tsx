@@ -1,3 +1,4 @@
+import About from "@/components/About";
 import FeaturedPosts from "@/components/FeaturedPosts";
 import Hero from "@/components/Hero";
 import Image from "next/image";
@@ -31,6 +32,7 @@ export default function Home() {
     <div className="min-h-screen"> 
     <Hero />
     <FeaturedPosts posts={samplePosts} />
+    <About />
     </div>
   );
 }
