@@ -1,9 +1,12 @@
+import Editor from '@/components/Editor'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-      Create Blog Page
+      <div className="mb-24">
+      <Editor  />
+      </div>
     </div>
   )
 }
