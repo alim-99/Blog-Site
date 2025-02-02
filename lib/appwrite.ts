@@ -24,45 +24,74 @@ export const publishBlog = async (
   coverImage: string,
   tags: string[] = []
 ) => {
-  if (!title || !content || !coverImage) {
-    throw new Error("Missing required fields");
-  }
-
   try {
-    // Generate a unique slug
-    const slug = generateSlug(title);
+      const slug = title
+          .toLowerCase()
+          .trim()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-+|-+$/g, "");
 
-    // Create metadata for SEO
-    const seoMetadata = {
-      title: title.trim(),
-      description: content.substring(0, 150).trim(), // First 150 characters as description
-      tags: tags.filter(tag => tag.trim() !== ''),
-    };
+      const response = await database.createDocument(
+          process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
+          process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID!,
+          ID.unique(),
+          {
+              title: title.trim(),
+              content: content.trim(),
+              coverImage,
+              slug,
+              tags,
+              createdAt: new Date().toISOString(),
+              seoMetadata: JSON.stringify({
+                  title: title.trim(),
+                  description: content.substring(0, 150).trim(),
+                  tags
+              })
+          }
+      );
 
-    // Save post in Appwrite database
-    const response = await database.createDocument(
-      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!, // Your database ID
-      process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID!, // Your collection ID
-      ID.unique(), // Generate unique ID
-      {
-        title: title.trim(),
-        content: content.trim(),
-        coverImage,
-        slug,
-        seoMetadata,
-        createdAt: new Date().toISOString(),
-        tags: tags.filter(tag => tag.trim() !== ''),
+      if (response) {
+          window.location.href = "/posts";
       }
-    );
 
-    if (response) {
-      // Redirect to the "Posts" page after publishing
-      window.location.href = "/posts";
-    }
-
-    return response;
+      return response;
   } catch (error) {
-    console.error("Error publishing blog:", error);
-    throw error; // Re-throw the error to be handled by the component
+      console.error("Error publishing blog:", error);
+      throw error;
+  }
+};
+
+// Function to fetch blog posts from Appwrite
+export const getBlogPosts = async () => {
+  try {
+    const response = await database.listDocuments(
+      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!, 
+      process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID!);
+
+    return response.documents.map((doc) => ({
+      $id: doc.$id,
+      title: doc.title,
+      tags: doc.tags,
+      content: doc.content,
+      coverImage: doc.coverImage,
+    }));
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    return [];
+  }
+};
+
+// Function to delete the blog post
+export const deleteBlogPost = async (postId: string) => {
+  try {
+    await database.deleteDocument(
+      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!, 
+      process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ID!, 
+      postId);
+
+    return true;
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    return false;
   }
 };

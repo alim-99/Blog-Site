@@ -23,23 +23,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-          <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${fontLora.variable}  antialiased`}
-      >
-        <ThemeProvider
+<ClerkProvider>
+  <html lang="en" suppressHydrationWarning>
+    <body className={`${fontLora.variable} antialiased`}>
+      <ThemeProvider
         attribute="class"
         defaultTheme="system"
         enableSystem
         disableTransitionOnChange
-        >
+      >
+        <div className="min-h-screen flex flex-col">
           <Navbar />
-          {children}
+          <main className="flex-grow">
+            {children}
+          </main>
           <Footer />
-        </ThemeProvider>
-      </body>
-    </html>
-    </ClerkProvider>
+        </div>
+      </ThemeProvider>
+    </body>
+  </html>
+</ClerkProvider>
   );
 }
