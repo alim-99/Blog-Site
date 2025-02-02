@@ -1,7 +1,6 @@
 import About from "@/components/About";
 import FeaturedPosts from "@/components/FeaturedPosts";
 import Hero from "@/components/Hero";
-import Image from "next/image";
 
 const samplePosts = [
   {

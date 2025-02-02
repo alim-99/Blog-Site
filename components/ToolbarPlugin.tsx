@@ -1,8 +1,5 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import {
-  $createParagraphNode,
-  $getSelection,
-  $isRangeSelection,
   FORMAT_TEXT_COMMAND,
 } from "lexical";
 import { Bold, Italic, Strikethrough, List } from "lucide-react";
@@ -12,6 +9,7 @@ const ToolbarPlugin = () => {
   const [editor] = useLexicalComposerContext();
 
   const applyFormat = useCallback((command: string) => {
+    // @ts-ignore
     editor.dispatchCommand(FORMAT_TEXT_COMMAND, command);
   }, [editor]);
 
